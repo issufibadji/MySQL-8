@@ -84,25 +84,214 @@ DESCRIBE Persons;
 
 -- UNIQUE Constraint on CREATE TABLE--
 CREATE TABLE Persons (
-    ID int NOT NULL,
+    PersonID int NOT NULL,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255),
     Age int,
-    UNIQUE (ID)
+    UNIQUE (PersonID)
 );
 
-ALTER TABLE Persons ADD UNIQUE (ID);
+ALTER TABLE Persons ADD UNIQUE (PersonID);
 
 -- UNIQUE Constraint on multiple columns-- 
+CREATE TABLE Persons (
+    PersonID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT UC_Person UNIQUE (PersonID,LastName)
+);
+
+ALTER TABLE Persons ADD CONSTRAINT UC_Person UNIQUE (PersonID,LastName);
+
+ -- -- UNIQUE Constraint on DROP TABLE--
+ ALTER TABLE Persons DROP INDEX UC_Person;
+ 
+ -- MySQL PRIMARY KEY Constraint --
+ CREATE TABLE Persons (
+    PersonID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (PersonID)
+);
+
+
+ CREATE TABLE Persons (
+    PersonID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (PersonID, LastName)
+);
+
+-- PRIMARY KEY on ALTER TABLE--
+ALTER TABLE Persons 
+ADD PRIMARY KEY(PersonID);
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (PersonID,LastName);
+
+-- DROP a PRIMARY KEY Constraint--
+ALTER TABLE Persons
+DROP PRIMARY KEY;
+use TestDB;
+
+
+CREATE TABLE Orders(
+OrderID int NOT NULL,
+OrderNumber int NOT NULL,
+PersonID int,
+PRIMARY KEY (OrderID),
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+);
+
+ALTER TABLE Orders
+ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_PersonOrder
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+ALTER TABLE Orders
+DROP FOREIGN KEY FK_PersonOrder;
+
+
 CREATE TABLE Persons (
     ID int NOT NULL,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255),
     Age int,
-    CONSTRAINT UC_Person UNIQUE (ID,LastName)
+    CHECK (Age>=18)
 );
 
-ALTER TABLE Persons ADD CONSTRAINT UC_Person UNIQUE (ID,LastName);
+-- MySQL CHECK Constraint --
 
- -- -- UNIQUE Constraint on DROP TABLE--
- ALTER TABLE Persons DROP INDEX UC_Person;
+-- CHECK on CREATE TABLE--
+CREATE TABLE Persons (
+    PersonID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CHECK (Age>=18)
+);
+
+CREATE TABLE Persons (
+    PersonsID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+
+ALTER TABLE Persons
+ADD CHECK (Age>=18);
+-- CHECK on ALTER TABLE --
+ALTER TABLE Persons
+ADD CONSTRAINT CHK_PersonAge CHECK (Age>=18 AND City='Sandnes');
+-- DROP a CHECK Constraint --
+ALTER TABLE Persons 
+DROP CHECK CHK_PersonAge;
+
+
+-- MySQL DEFAULT Constraint --
+
+-- DEFAULT on CREATE TABLE --
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+
+CREATE TABLE Orders (
+    ID int NOT NULL,
+    OrderNumber int NOT NULL,
+    OrderDate date DEFAULT CURRENT_DATE()
+);
+
+-- DEFAULT on ALTER TABLE --
+ALTER TABLE Persons
+ALTER City SET DEFAULT 'Sandnes';
+
+-- DROP a DEFAULT Constraint --
+ALTER TABLE Persons
+ALTER City DROP DEFAULT;
+
+
+-- MySQL CREATE INDEX Statement -- 
+-- MySQL CREATE INDEX Example --
+
+CREATE INDEX idx_lastname
+ON Persons (LastName);
+
+CREATE INDEX idx_pname
+ON Persons (LastName, FirstName);
+-- DROP INDEX Statement --
+ALTER TABLE table_name
+DROP INDEX index_name;
+
+
+-- MySQL AUTO INCREMENT Field--
+-- MySQL AUTO_INCREMENT Keyword--
+CREATE TABLE Persons (
+    Personid int NOT NULL AUTO_INCREMENT,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    PRIMARY KEY (PersonID)
+);
+
+ALTER TABLE Persons AUTO_INCREMENT=100;
+
+INSERT INTO Persons (FirstName,LastName)
+VALUES ('Lars','Monsen');
+
+
+
+-- MySQL Working With Dates --
+
+-- MySQL Date Data Types --
+/*
+O MySQL vem com os seguintes tipos de dados para armazenar uma data ou um valor de data/hora no banco de dados:
+*/
+-- DATE- formato AAAA-MM-DD
+-- DATETIME- formato: AAAA-MM-DD HH:MI:SS
+-- TIMESTAMP- formato: AAAA-MM-DD HH:MI:SS
+-- YEAR- formato AAAA ou AA
+
+ALTER TABLE Orders
+ADD  OrderDate datetime;
+
+SELECT * FROM Orders WHERE OrderDate='2008-11-11';
+
+-- MySQL Views--
+-- MySQL CREATE VIEW Statement --
+
+-- Exemplos de MySQL CREATE VIEW--
+
+CREATE VIEW BrazilCustomers AS
+SELECT CustomerName, ContactName
+FROM Customers
+WHERE Country = 'Brazil';
+
+SELECT * FROM Brazil_Customers;
+
+
+CREATE VIEW ProductsPrice AS
+SELECT ProductName, Price
+FROM Products
+WHERE Price > (SELECT AVG(Price) FROM Products);
+
+SELECT * FROM ProductsPrice;
+
+
+
+
+
+
+
+ 
+ 
