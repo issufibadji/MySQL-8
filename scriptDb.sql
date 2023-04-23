@@ -267,31 +267,168 @@ ADD  OrderDate datetime;
 
 SELECT * FROM Orders WHERE OrderDate='2008-11-11';
 
+-- DDL:Data Definition Language--
+/* 
+	Data Definition Language ou linguagem de definição dos dados.
+    Data Definition Language é a linguagem de definição de dados.
+    Ela permite a gente trabalhar com estruturas.
+    
+    Nós vamos aprender basicamente três comandos dentro do DDL, que é chamado de Create alter e drop.
+    Então create para criar estruturas alter para alterar estruturas é drop.
+   Para eliminar estruturas vai criar um banco Create database, vai eliminar um banco drop database se
+*/
+-- CREATE --
+/* 
+o comando create o comando create, ele permite você criar objetos.
+*/
+-- Criar Usraio sem  prevelegio --
+CREATE USER 'ibjdev'@'localhost' IDENTIFIED BY '@abcd123';
+DROP USER 'ibjdev'@'localhost' ;
+
+-- Criar Usraio com prevelegio de admin --
+CREATE ROLE `Administrator`;
+
+GRANT ALL PRIVILEGES ON testDB.* to `Administrator`;
+
+CREATE USER 'ibjdev'@'localhost' DEFAULT ROLE  `Administrator`;
+
+-- Alterar senha de user --
+ALTER USER 'ibjdev'@'localhost' 
+IDENTIFIED BY '@abcd123';
+
+
+-- Outra forma de criar usuariar e dar prevelegio e acessa remota
+CREATE USER 'ibjdev'@'%.%.%.%' IDENTIFIED BY '@abcd123';
+
+GRANT `Administrator` to 'ibjdev'@'%.%.%.%';
+
+
 -- MySQL Views--
 -- MySQL CREATE VIEW Statement --
+USE testDB;
+
+CREATE TABLE IF NOT EXISTS Customers(
+CustomersID int NOT NULL AUTO_INCREMENT,
+CustomerName varchar(255),
+Contact int NOT NULL,
+Country varchar(50),
+CONSTRAINT PK_Customers PRIMARY KEY (CustomersID)
+);
+
+INSERT INTO Customers VALUES(null,'Jose da Silva', 21000000,'Brazil');
+
+SELECT * FROM Customers;
 
 -- Exemplos de MySQL CREATE VIEW--
 
+ 
 CREATE VIEW BrazilCustomers AS
-SELECT CustomerName, ContactName
+SELECT CustomerName, Contact
 FROM Customers
 WHERE Country = 'Brazil';
 
-SELECT * FROM Brazil_Customers;
+
+-- SQL SECURITY DEFINER --
+SELECT * FROM BrazilCustomers;
 
 
-CREATE VIEW ProductsPrice AS
+CREATE TABLE IF NOT EXISTS Products(
+ProductsID int NOT NULL AUTO_INCREMENT,
+ProductName varchar(255),
+Price float,
+CustomersID int,
+PRIMARY KEY (ProductsID),
+CONSTRAINT FK_CustomersID FOREIGN KEY (CustomersID) 
+REFERENCES Customers(CustomersID)
+);
+INSERT INTO Products VALUES (null,'Notebook',1.500,'1');
+
+-- QUER SE USE TER PREVELEGIOS PARA ENVOCAR VIEWS--
+CREATE OR REPLACE
+DEFINER = 'ibj'@'localhost'
+SQL SECURITY INVOKER 
+VIEW ProductsPrice AS
 SELECT ProductName, Price
 FROM Products
 WHERE Price > (SELECT AVG(Price) FROM Products);
-
+-- SQL SECURITY DEFINER-- 
 SELECT * FROM ProductsPrice;
 
+-- CREATE PROCEDURE ---
 
+USE world;
+desc city ;
+DELIMITER //
 
+CREATE PROCEDURE sp_contaCidade (in pais char(3), out cidades int)
+	BEGIN 
+	  SELECT COUNT(*) INTO cidades FROM world.city WHERE CountryCode = pais;
+	END
+//
 
-
-
-
+ CALL sp_contaCidade('FRA', @cities);
  
+ SELECT @cities AS total;
+ //
+ DELIMITER ;
+
+-- ALTER --
+USE testdb;
+
+DESC Products;
+
+ALTER TABLE Products
+RENAME COLUMN Price TO ProductPrice;
+
+ALTER TABLE Products
+DROP COLUMN ProductPrice;
+
+ALTER TABLE Products
+ADD ProductsStatus tinyint signed not null;
+
+ALTER TABLE Products 
+ADD ProductsStatus tinyint signed not null default 1;
+
+ALTER TABLE Products 
+ADD CONSTRAINT ch_products CHECK(ProductsStatus BETWEEN 1 AND 3);
+
+ALTER TABLE Products 
+DROP CONSTRAINT ch_products;
+
+-- DROP TABLE --
+DROP TABLE IF EXISTS Products ;
+
+DROP DATABASE IF EXISTS ibjdev;
+
+-- DQL - Data Query Language - Linguagem de Consulta de Dados--
+
+USE testDB;
+SELECT * FROM Products ;
+
+SELECT ProductsID AS id, ProductName AS nome FROM Products p;
+
+SELECT p.ProductsID AS id, p.ProductName AS nome FROM testdb.Products p;
+
+SELECT 'Testa' AS coluna_virtual;
+
+
+--  DML - Data Manipulation Language - Linguagem de Manipulação dos dados --
+
+Desc Customers; 
+
+-- INSERT POSICIONAL ---
+INSERT INTO Customers 
+VALUES (NULL,'Ibj', 66990009,'PT');
+
+SELECT * FROM Customers;
+-- INSERT DECLARATIVO --- 
+INSERT INTO Customers (CustomerName, Contact, Country)
+VALUES ('Issufi', 21000000, 'EUA');
+
+-- INSERT SEM INTO--
+INSERT INTO Customers (CustomerName, Contact, Country)VALUES 
+('Carlos', 20000000, 'EUA'),('Mário', 22000000, 'EUA'),
+('Jóse', 24000000, 'EUA'),('Badji', 25000000, 'EUA');
+
+ SELECT * FROM Customers;
  
