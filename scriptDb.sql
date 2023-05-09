@@ -17,16 +17,19 @@ USE testDB;
 -- The MySQL CREATE TABLE Statement--
 
 CREATE TABLE Persons (
-    PersonID int,
-    LastName varchar(255),
-    FirstName varchar(255),
-    Address varchar(255),
-    City varchar(255)
+    PersonID INT,
+    LastName VARCHAR(255),
+    FirstName VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255)
 );
 
 -- The MySQL SELECT TABLE Statement--
 
-SELECT * FROM Persons;
+SELECT 
+    *
+FROM
+    Persons;
 
 
 -- The MySQL DESCRIBE TABLE Statement--
@@ -410,7 +413,7 @@ SELECT ProductsID AS id, ProductName AS nome FROM Products p;
 SELECT p.ProductsID AS id, p.ProductName AS nome FROM testdb.Products p;
 
 SELECT 'Testa' AS coluna_virtual;
-
+ -- ---------------------------------------------
 
 --  DML - Data Manipulation Language - Linguagem de Manipulação dos dados --
 
@@ -430,5 +433,64 @@ INSERT INTO Customers (CustomerName, Contact, Country)VALUES
 ('Carlos', 20000000, 'EUA'),('Mário', 22000000, 'EUA'),
 ('Jóse', 24000000, 'EUA'),('Badji', 25000000, 'EUA');
 
- SELECT * FROM Customers;
+
+  -- ---------------------------------------------
+ -- UPDATE Table -- 
+UPDATE Customers 
+SET Contact = 29000000
+WHERE CustomersID = 1;
+
+-- UPDATE Multiple Records --
+
+UPDATE Customers 
+SET Contact = 28000000, Country = 'PRT'
+WHERE CustomersID = 1;
+
+ -- ---------------------------------------------
  
+ -- The MySQL DELETE Statement -- 
+ 
+ DELETE FROM Customers WHERE CustomerName='Carlos';
+  -- ---------------------------------------------
+ -- The MySQL  TRUNCATE Statement 
+ /* TRUNCATE É O COMANDO QUE MEXE COM ESTRUTURA DE BANCO E PAGA DADOS E ESTRUTURA DE BANCO, E REFAZ ELA  */
+ 
+ TRUNCATE TABLE  Customers ;
+  -- ---------------------------------------------
+  
+  -- The MySQL WHERE Clause
+  
+  SELECT * FROM
+    Customers
+WHERE
+    Country = 'Mexico';
+  
+  
+SELECT * FROM
+    Customers
+WHERE
+    CustomersID >= 1 and CustomersID < 4 ;
+    
+SELECT * FROM Customers 
+ORDER BY CustomerName ASC
+LIMIT 3;
+
+SELECT * FROM Customers 
+ORDER BY CustomerName DESC
+LIMIT 3;
+
+ 
+ SELECT COUNT(CustomersID), Country
+FROM Customers
+GROUP BY Country;
+
+SELECT COUNT(CustomersID), Country
+FROM Customers
+GROUP BY Country
+ORDER BY COUNT(CustomersID) DESC;
+
+    SELECT * FROM Customers;
+
+
+-- CLÁUSULAS E OPERADORES -- 
+
