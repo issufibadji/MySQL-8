@@ -494,3 +494,62 @@ ORDER BY COUNT(CustomersID) DESC;
 
 -- CLÁUSULAS E OPERADORES -- 
 
+-- The MySQL IN Operator -
+
+desc Customers;
+  SELECT * FROM Customers;
+  
+SELECT * FROM Customers
+WHERE Country IN ('EUA', 'PRT', 'UK');
+
+SELECT * FROM customers
+ WHERE Country NOT IN ('EUA', 'PRT', 'UK');
+
+SELECT * FROM Customers
+WHERE Country IN (SELECT Country FROM Suppliers);
+
+-- The between --
+SELECT * FROM  Customers WHERE Contact >= 20000000 AND Contact<= 24000000;
+SELECT * FROM  Customers WHERE Contact between 20000000 AND 24000000;
+ DELETE FROM customers WHERE Contact BETWEEN 20000000 AND 24000000;
+ 
+ -- The not between --
+ SELECT * FROM  Customers WHERE Contact < 20000000 OR Contact > 24000000;
+ SELECT * FROM  Customers WHERE Contact not between 20000000 AND 24000000;
+ DELETE FROM customers WHERE Contact NOT BETWEEN 20000000 AND 24000000;
+
+  --  -------------------------------------  ---
+  -- The MySQL LIKE Operator--
+/*  
+WHERE CustomerName LIKE 'a%' Encontra todos os valores que começam com "a"
+WHERE CustomerName LIKE '%a' Localiza qualquer valor que termine com "a"
+WHERE CustomerName LIKE '%or%' Localiza qualquer valor que tenha "ou" em qualquer posição
+WHERE CustomerName LIKE '_r%' Localiza qualquer valor que tenha "r" na segunda posição
+WHERE CustomerName LIKE 'a_%' Localiza qualquer valor que comece com "a" e tenha pelo menos 2 caracteres de comprimento
+WHERE CustomerName LIKE 'a__%' Localiza quaisquer valores que comecem com "a" e tenham pelo menos 3 caracteres de comprimento
+WHERE ContactName LIKE 'a%o' Localiza qualquer valor que comece com "a" e termine com "o"
+ */ 
+  
+  SELECT * FROM Customers
+WHERE CustomerName LIKE 'a%';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%a';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '%or%';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE '_r%';
+
+SELECT * FROM Customers
+WHERE CustomerName LIKE 'a__%';
+
+SELECT * FROM Customers
+WHERE ContactName LIKE 'a%o';
+
+SELECT * FROM Customers
+WHERE CustomerName NOT LIKE 'a%';
+  
+  
+  
