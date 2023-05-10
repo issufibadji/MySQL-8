@@ -551,5 +551,7 @@ WHERE ContactName LIKE 'a%o';
 SELECT * FROM Customers
 WHERE CustomerName NOT LIKE 'a%';
   
+  -- The Soundex --
   
+  SELECT SOUNDEX('Juice'), SOUNDEX('Jucy');
   
