@@ -1,5 +1,28 @@
-# MySQL cheatsheet
+<h1 align="center" color=" ">
+  MySQL cheatsheet
+</h1>
 
+<p align="center">
+    <a href="#book-sobre">Sobre</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#rocket-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#cloud-deploy">Deploy</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#memo-licença">Licença</a>
+</p>
+
+<p align="center">
+   
+<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/issufibadji/doctorCare?style=flat-square">
+
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/issufibadji/doctorCare?style=flat-square">
+
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/issufibadji/doctorCare?style=flat-square">
+
+<img alt="GitHub" src="https://img.shields.io/github/license/issufibadji/doctorCare?style=flat-square">
+</p>
+
+ ![MySQL cheatsheet](https://github.com/issufibadji/thebest/blob/master/assets/images/thebestsoftware.png)
+ 
 I have even uploaded the .sql file which you can download and directly run them in the sql prompt.
 
 ### General Commands
