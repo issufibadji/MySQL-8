@@ -21,7 +21,7 @@
 <img alt="GitHub" src="https://img.shields.io/github/license/issufibadji/doctorCare?style=flat-square">
 </p>
 
- ![MySQL cheatsheet](https://github.com/issufibadji/thebest/blob/master/assets/images/thebestsoftware.png)
+ ![MySQL cheatsheet]([https://github.com/issufibadji/thebest/blob/master/assets/images/thebestsoftware.png](https://github.com/issufibadji/MySQL-8/blob/master/cmd.png)
  
 I have even uploaded the .sql file which you can download and directly run them in the sql prompt.
 
